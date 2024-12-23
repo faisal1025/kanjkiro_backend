@@ -4,8 +4,9 @@
   "description": "this is backend of school record",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
-    "start": "node dist/index.js"
+    "build": "tsc & prisma generate",
+    "start": "node dist/index.js",
+    "postinstall": "prisma generate"
   },
   "author": "Faisal",
   "license": "ISC",
