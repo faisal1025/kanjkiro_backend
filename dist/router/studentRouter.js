@@ -43,21 +43,21 @@ router.route('/create')
 }));
 router.route('/getall')
     .get((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const query = req.query.query;
-    const page = req.query.page;
+    const query = req.query.query || "";
+    const page = Number(req.query.page) || 1;
     const perPage = 10;
     console.log('search: ', query);
     function main() {
         return __awaiter(this, void 0, void 0, function* () {
             const allUsers = query === '' ? yield prisma.student.findMany({
-                skip: (page - 1) * perPage,
+                skip: Number((page - 1) * perPage),
                 take: perPage
             }) : yield prisma.student.findMany({
-                skip: (page - 1) * perPage,
+                skip: Number((page - 1) * perPage),
                 take: perPage,
                 where: {
                     aadharNumber: query
-                },
+                }
             });
             const total = query === '' ? yield prisma.student.count() : yield prisma.student.count({
                 where: {

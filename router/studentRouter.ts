@@ -40,21 +40,21 @@ router.route('/create')
 
 router.route('/getall')
     .get(async (req: any, res: any) => {
-        const query = req.query.query
-        const page = req.query.page
+        const query = req.query.query || ""
+        const page = Number(req.query.page) || 1
         const perPage = 10
         console.log('search: ', query);
         
         async function main() {  
             const allUsers = query === '' ? await prisma.student.findMany({
-                skip: (page-1)*perPage,
+                skip: Number((page-1)*perPage),
                 take: perPage
             }) : await prisma.student.findMany({
-                skip: (page-1)*perPage,
+                skip: Number((page-1)*perPage),
                 take: perPage,
                 where: {
                     aadharNumber: query
-                },
+                }
             })
             
             const total = query === '' ? await prisma.student.count() : await prisma.student.count({
